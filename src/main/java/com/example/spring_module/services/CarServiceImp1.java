@@ -4,6 +4,7 @@ import com.example.spring_module.dao.CarDAO;
 import com.example.spring_module.models.Car;
 import com.example.spring_module.models.dto.CarDTO;
 import lombok.AllArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,17 +22,11 @@ public class CarServiceImp1 implements CarService {
     public ResponseEntity<List<Car>> getAllCars() {
         return new ResponseEntity<>(carDAO.findAll(), HttpStatus.OK);
     }
-    public ResponseEntity<Car> getCarById(int id) {
-        if (id <= 0) {
-            throw new RuntimeException();
-        }
+    public ResponseEntity<Car> getCarById(String id) {
         return new ResponseEntity<>(carDAO.findById(id).get(), HttpStatus.OK);
     }
-    public void deleteCar(int id) {
-        if (id <= 0) {
-            throw new RuntimeException();
-        }
-        carDAO.deleteById(id);
+    public void deleteCar(String id) {
+            carDAO.deleteById(id);
     }
     public ResponseEntity<List<Car>> getCarsByPower(int value) {
         return new ResponseEntity<>(carDAO.findByPower(value), HttpStatus.OK);

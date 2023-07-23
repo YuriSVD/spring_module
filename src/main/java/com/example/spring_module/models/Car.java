@@ -2,22 +2,16 @@ package com.example.spring_module.models;
 
 import com.example.spring_module.models.views.Views;
 import com.fasterxml.jackson.annotation.JsonView;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document
 @Data
-@NoArgsConstructor
 public class Car {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(Views.Level1.class)
-    private int id;
+    private String id;
     @NotBlank(message = "name is required")
     @JsonView({Views.Level1.class, Views.Level2.class, Views.Level3.class})
     private String model;

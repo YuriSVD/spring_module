@@ -6,6 +6,7 @@ import com.example.spring_module.models.views.Views;
 import com.example.spring_module.services.CarService;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,12 +30,12 @@ public class CarController {
     }
     @GetMapping("/{id}")
     @JsonView(Views.Level1.class)
-    public ResponseEntity<Car> getCarById(@PathVariable int id) {
+    public ResponseEntity<Car> getCarById(@PathVariable String id) {
         return carService.getCarById(id);
     }
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.GONE)
-    public void deleteCarById(@PathVariable int id) {
+    public void deleteCarById(@PathVariable String id) {
         carService.deleteCar(id);
     }
     @GetMapping("/power/{value}")
