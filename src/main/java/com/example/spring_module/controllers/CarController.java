@@ -6,11 +6,13 @@ import com.example.spring_module.models.views.Views;
 import com.example.spring_module.services.CarService;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
-import org.bson.types.ObjectId;
+import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 @RestController
@@ -47,5 +49,23 @@ public class CarController {
     @JsonView(Views.Level2.class)
     public ResponseEntity<List<Car>> getCarsByProducer(@PathVariable String value) {
         return carService.getCarsByProducer(value);
+    }
+    @SneakyThrows
+    @PostMapping("/savecarwithpic")
+    public void saveCarWithPic(@RequestParam("picture") MultipartFile picture,
+                               @RequestParam("model") String model,
+                               @RequestParam("producer") String producer,
+                               @RequestParam("power") int power
+                               ) {
+        CarDTO car = new CarDTO();
+        car.setModel(model);
+        car.setProducer(producer);
+        car.setPower(power);
+        String originalFilename = picture.getOriginalFilename();
+        car.setPicture(originalFilename);
+        String path = System.getProperty("user.home") + File.separator + "Pictures" + File.separator + originalFilename;
+        File transferDestinationFile = new File(path);
+        picture.transferTo(transferDestinationFile);
+        carService.saveCar(car, transferDestinationFile);
     }
 }

@@ -4,10 +4,12 @@ import com.example.spring_module.models.views.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
+@NoArgsConstructor
 @Data
 public class Car {
     @Id
@@ -24,9 +26,18 @@ public class Car {
     @JsonView({Views.Level1.class, Views.Level2.class})
     private int power;
 
+    private String picture;
+
     public Car(String model, String producer, int power) {
         this.model = model;
         this.producer = producer;
         this.power = power;
+    }
+
+    public Car(String model, String producer, int power, String picture) {
+        this.model = model;
+        this.producer = producer;
+        this.power = power;
+        this.picture = picture;
     }
 }

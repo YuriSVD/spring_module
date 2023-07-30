@@ -10,12 +10,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.List;
 @Service("one")
 @AllArgsConstructor
 public class CarServiceImp1 implements CarService {
     private CarDAO carDAO;
     public void saveCar(CarDTO carDTO) {
+        Car car = new Car(carDTO.getModel(), carDTO.getProducer(), carDTO.getPower());
+        carDAO.save(car);
+    }
+    public void saveCar(CarDTO carDTO, File file) {
         Car car = new Car(carDTO.getModel(), carDTO.getProducer(), carDTO.getPower());
         carDAO.save(car);
     }

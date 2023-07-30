@@ -11,5 +11,6 @@ public class CarDTO {
     private String model;
     private String producer;
     private int power;
+    private String picture;
 }
 
